@@ -1,5 +1,5 @@
 # Use the latest Node.js image (Node.js 20)
-FROM node:22-alpine as build-stage
+FROM node:22-alpine AS build-stage
 
 # Set working directory in container
 WORKDIR /app
@@ -14,14 +14,15 @@ RUN npm install
 COPY . .
 
 # Build the project for production
-RUN npm run build
+# RUN npm run build
 
 # Use NGINX to serve the built files
-FROM nginx:alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+# FROM nginx:alpine AS production-stage
+# COPY --from=build-stage /var/www/html/dist /usr/share/nginx/html
 
 # Expose port 80 to the outside
-EXPOSE 80
+EXPOSE 5175
 
 # Start NGINX
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "dev"]
